@@ -5,18 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@yield('title')</title>
     <!-- plugins:css -->
-    <link rel="stylesheet" href="{{ asset('Label_Admin/src/assets/vendors/iconfonts/mdi/css/materialdesignicons.css') }}">
-    <link rel="stylesheet" href="{{ asset('Label_Admin/src/assets/vendors/css/vendor.addons.css') }}">
+    <link rel="stylesheet" href="{{ asset('/Label_Admin/src/assets/vendors/iconfonts/mdi/css/materialdesignicons.css') }}">
+    <link rel="stylesheet" href="{{ asset('/Label_Admin/src/assets/vendors/css/vendor.addons.css') }}">
     <!-- endinject -->
     <!-- vendor css for this page -->
     <!-- End vendor css for this page -->
     <!-- inject:css -->
-    <link rel="stylesheet" href="{{ asset('Label_Admin/src/assets/css/shared/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('/Label_Admin/src/assets/css/shared/style.css') }}">
     <!-- endinject -->
     <!-- Layout style -->
-    <link rel="stylesheet" href="{{ asset('Label_Admin/src/assets/css/demo_1/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('/Label_Admin/src/assets/css/demo_1/style.css') }}">
     <!-- Layout style -->
-    <link rel="shortcut icon" href="{{ asset('Label_Admin/src/assets/images/favicon.ico') }}" />
+    <link rel="shortcut icon" href="{{ asset('/Label_Admin/src/assets/images/favicon.ico') }}" />
     @yield('head-script')
   </head>
   <body class="header-fixed">
