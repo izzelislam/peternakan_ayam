@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::prefix('/admin')->namespace('Admin')->name('')->group(function(){
+	Route::get('/','DashboardController@index');
+	Route::resource('/kategori','KategoriController');	
+	Route::resource('/kandang','KandangController');	
+	Route::resource('/suplier','SuplierController');	
+	Route::resource('/pelanggan','PelangganController');	
+	Route::resource('/kandang_detail','KandangDetailController');	
 });
