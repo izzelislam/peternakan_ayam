@@ -24,15 +24,13 @@
 	          <div class="row mb-4">
 	          	<div class="col-md-3">
 	          	  <label>Nama Pelanggan</label>
-	              <select class="custom-select pelanggan" name="pelanggan_id" x-model="pelanggan_id">
-	               	<option value="">-- pilih pelanggan --</option>
+	              <select class="custom-select pelanggan" name="pelanggan_id">
+	               	<option>-- pilih pelanggan --</option>
 	               	@foreach ($pelanggan as $plg)
 	               		<option value="{{ $plg->id }}">{{ $plg->nama }}</option>
 	               	@endforeach
 	              </select>
 	          	</div>
-
-	
 	          </div>
 
 	          <template x-for="(row,index) in rows" :key="row">
