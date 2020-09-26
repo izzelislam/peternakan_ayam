@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
 
         User::create([
         	'name'=>'admin',
-        	'email'=>$faker->email,
+        	'email'=>'admin@admin',
         	'no_hp'=>$faker->phoneNumber,
         	'password'=>bcrypt('admin'),
         	'alamat'=>$faker->address,
@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
 
         User::create([
         	'name'=>'petugas',
-        	'email'=>$faker->email,
+        	'email'=>'petugas@petugas',
         	'no_hp'=>$faker->phoneNumber,
         	'password'=>bcrypt('petugas'),
         	'alamat'=>$faker->address,
@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
 
         User::create([
         	'name'=>'kasir',
-        	'email'=>$faker->email,
+        	'email'=>'kasir@kasir',
         	'no_hp'=>$faker->phoneNumber,
         	'password'=>bcrypt('kasir'),
         	'alamat'=>$faker->address,

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Pelanggan;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PelangganController extends Controller
 {
@@ -15,7 +16,7 @@ class PelangganController extends Controller
 
     public function index()
     {
-    	$pelanggans=$this->model->orderBy('id','desc')->paginate(10);
+    	$pelanggans=$this->model->orderBy('id','desc')->get();
     	return view('admin.pelanggan.index',compact('pelanggans'));
     }
 
@@ -33,6 +34,7 @@ class PelangganController extends Controller
     	]);
 
     	$this->model->create($request->all());
+        Alert::success('Pelanggan', 'Berhasil Tambah Pelanggan !');
     	return redirect()->route('pelanggan.index');
     }
 
@@ -51,12 +53,14 @@ class PelangganController extends Controller
     public function update(Request $request, $id)
     {
     	$this->model->find($id)->update($request->all());
+        Alert::success('Pelanggan', 'Berhasil Edit Pelanggan !');
     	return redirect()->route('pelanggan.index');
     }
 
     public function destroy($id)
     {
     	$this->model->find($id)->delete();
+        Alert::warning('Pelanggan', 'Berhasil Hapus Pelanggan !');
     	return redirect()->route('pelanggan.index');
     }
 }

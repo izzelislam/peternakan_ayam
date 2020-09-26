@@ -16,9 +16,8 @@ class CreateOrderDetailTable extends Migration
         Schema::create('order_detail', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id');
-            $table->foreignId('user_id');
-            $table->foreignId('pelanggan_id');
-            $table->integer('berat_id');
+            $table->foreignId('kategori_id');
+            $table->integer('harga');
             $table->integer('qty');
             $table->integer('sub_total');
             $table->timestamps();

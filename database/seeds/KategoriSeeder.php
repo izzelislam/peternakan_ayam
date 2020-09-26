@@ -13,10 +13,12 @@ class KategoriSeeder extends Seeder
         Kategori::create([
         	'nama'=>'ayam jabro',
         	'harga'=>30000,
+            'status'=>'habis',
         ]);
         Kategori::create([
         	'nama'=>'ayam broiler',
         	'harga'=>20000,
+            'status'=>'habis',
         ]);
     }
 }

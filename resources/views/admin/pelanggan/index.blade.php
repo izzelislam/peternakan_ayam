@@ -2,13 +2,16 @@
 @section('title','Pelanggan')
 @section('page','Pelanggan')
 @section('content')
+@section('head-script')
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+@endsection
 	<div class="col-lg-12">
 	  <div class="item-wrapper my-3">
 	  	<a href="{{ route('pelanggan.create') }}" class="btn btn-sm btn-primary btn-rounded"><i class="mdi mdi-plus-circle mr-2"></i>Tambah Pelanggan</a>
 	  </div>
 	  <div class="grid">
 	    <div class="item-wrapper">
-	      <div class="table-responsive">
+	      <div class="table-responsive p-3">
 	        <table class="table info-table">
 	          <thead>
 	            <tr>
@@ -42,7 +45,17 @@
 	        </table>
 	      </div>
 	    </div>
-	    {{ $pelanggans->links() }}
 	  </div>
 	</div>
+@endsection
+@section('end-script')
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+	<script>
+		$(document).ready(function(){
+			$('.table').DataTable();
+		});
+;
+	</script>
 @endsection

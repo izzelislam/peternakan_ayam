@@ -23,4 +23,9 @@ class KandangDetail extends Model
     {
     	return $this->belongsTo('App\Model\Kategori');
     }
+
+    public function AyamCek()
+    {
+        return $this->hasMany('App\Model\AyamCek');
+    }
 }

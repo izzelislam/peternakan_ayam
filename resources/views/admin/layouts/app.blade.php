@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -29,21 +30,7 @@
       <!-- partial -->
       <div class="page-content-wrapper">
         <div class="page-content-wrapper-inner">
-         {{-- breadcrumb --}}
-          <div class="viewport-header">
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb has-arrow">
-                <li class="breadcrumb-item">
-                  <a href="#">Dashboard</a>
-                </li>
-                <li class="breadcrumb-item">
-                  <a href="#">Charts</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">Chartjs</li>
-              </ol>
-            </nav>
-          </div>
-          {{-- end-breadcrumb --}}
+
           <div class="content-viewport">
             <div class="row">
               <div class="col-12 py-5">
@@ -58,6 +45,7 @@
         </div>
       </div>
     </div>
+    @include('sweetalert::alert')
     <!-- SCRIPT LOADING START FORM HERE /////////////-->
     <!-- plugins:js -->
     <script src="/Label_Admin/src/assets/vendors/js/core.js"></script>

@@ -16,6 +16,7 @@ class CreateOrderTable extends Migration
         Schema::create('order', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
+            $table->foreignId('pelanggan_id');
             $table->enum('status',['selesai','proses','pending','batal']);
             $table->integer('total')->nullable();
             $table->timestamps();

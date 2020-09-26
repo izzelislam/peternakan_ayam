@@ -7,5 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class AyamCek extends Model
 {
     protected $table= 'ayam_cek';
-    protected $fillable=['user_id','kandang_id','ayam_mati','ayam_sakit'];
+    protected $fillable=['user_id','kandang_detail_id','ayam_mati','ayam_sakit'];
+
+    public function User()
+    {
+    	return $this->belongsTo('App\Model\User');
+    }
+
+    public function KandangDetail()
+    {
+    	return $this->belongsTo('App\Model\KandangDetail');
+    }
 }

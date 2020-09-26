@@ -4,11 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Model\KandangDetail;
+use App\Model\Kategori;
+use App\Model\Order;
+use App\Model\Pelanggan;
+use App\Charts\OrderChart;
+
 
 class DashboardController extends Controller
 {
-    public function index($value='')
+    public function index()
     {
-    	return view('admin.layouts.app');
+    	$order=Order::paginate(4);
+    	$pelanggan=Pelanggan::all();
+    	$kandang_detail=KandangDetail::where('status','diternak');
+    	$kategoris=Kategori::all();
+    	return view('admin.dashboard.index',compact('kategoris','order','pelanggan','kandang_detail'));
     }
 }

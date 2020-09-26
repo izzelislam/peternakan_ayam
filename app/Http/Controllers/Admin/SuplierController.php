@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Suplier;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SuplierController extends Controller
 {
@@ -26,7 +27,7 @@ class SuplierController extends Controller
     public function store(Request $request)
     {
     	$this->model->create($request->all());
-
+        Alert::success('Suplier', 'Berhasil Tambah Suplier !');
     	return redirect()->route('suplier.index');
     }
 
@@ -45,12 +46,14 @@ class SuplierController extends Controller
 	public function update(Request $request,$id)
 	{
 	   $this->model->find($id)->update($request->all());
+       Alert::success('Suplier', 'Berhasil Edit Suplier !');
 		return redirect()->route('suplier.index');
 	}    
 
     public function destroy($id)
     {
     	$data=$this->model->find($id)->delete();
+        Alert::Warning('Suplier', 'Berhasil Hapus Suplier !');
     	return redirect()->route('suplier.index');
     }
 }

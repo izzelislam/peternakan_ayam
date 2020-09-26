@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
-@section('title','Pelanggan')
-@section('page','Buat Pelanggan')
+@section('title','Edit Ayam')
+@section('page','Buat Edit Ayam')
 
 @section('head-script')
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" />
@@ -11,14 +11,14 @@
 	  <div class="grid">
 	    <div class="grid-body">
 	      <div class="item-wrapper">
-	        <form method="POST" action="{{ route('kandang_detail.upadte') }}">
+	        <form method="POST" action="{{ route('kandang_detail.update',$kandangdetails->id)}}">
 	        @csrf
 	        @method('PUT')
 	          <div class="form-group">       
 	        	<label>Suplier</label>
 	              <select class="custom-select select-suplier" name="suplier_id">
 	                @foreach ($supliers as $suplier)
-	                	<option value="{{ $suplier->id }}">{{ $suplier->nama }}</option>
+	                	<option value="{{ $suplier->id }}" {{ $suplier->id == $kandangdetails->suplier_id ? 'selected' :'null' }}>{{ $suplier->nama }}</option>
 	                @endforeach
 	              </select>
 	          </div>
@@ -27,7 +27,7 @@
 	        	<label>Kategori</label>
 	              <select class="custom-select select-suplier" name="kategori_id">
 	                @foreach ($kategoris as $kategori)
-	                	<option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+	                	<option value="{{ $kategori->id }}" {{ $kategori->id == $kandangdetails->kategori_id ? 'selected' : 'null' }} >{{ $kategori->nama }}</option>
 	                @endforeach
 	              </select>
 	          </div>
@@ -36,22 +36,37 @@
 	          	<label>kandang</label>
 	                <select class="custom-select select-suplier" name="kandang_id">
 	                  @foreach ($kandangs as $kandang)
-	                  	<option value="{{ $kandang->id }}">{{ $kandang->nama }}</option>
+	                  	<option value="{{ $kandang->id }}" {{ $kandang->id == $kandangdetails->kandang_id ? 'selected' : null }}>{{ $kandang->nama }}</option>
 	                  @endforeach
 	                </select>
 	            </div>
 
 	          <div class="form-group">
 	            <label for="inputPassword1">Jumlah</label>
-	            <input type="number" name="jumlah_awal" class="form-control" id="inputPassword1" placeholder="Enter phone number">
+	            <input type="number" name="jumlah_awal" class="form-control" id="inputPassword1" placeholder="Enter phone number" value="{{ old('jumlah_awal',$kandangdetails->jumlah_awal) }}">
 	          </div>
 	          <div class="form-group">
 	            <label for="inputPassword1">Keterangan</label>
 	            <div class="col-md-12 showcase_content_area">
-	              <textarea class="form-control" name="keterangan" id="inputType9" cols="12" rows="5"></textarea>
+	              <textarea class="form-control" name="keterangan" id="inputType9" cols="12" rows="5">{{ old('keterangan',$kandangdetails->keterangan) }}</textarea>
 	            </div>
 	          </div>
-	          <button type="submit" class="btn btn-sm btn-primary">Buat</button>
+	          <div class="form-group">
+	            <label for="inputPassword1">Status</label>
+	            <div class="form-inline">
+	              <div class="radio mb-3">
+	                <label class="radio-label mr-4">
+	                  <input name="status" type="radio" value="diternak" {{ $kandangdetails->status =='diternak' ? 'checked' : null }} >diternak<i class="input-frame"></i>
+	                </label>
+	              </div>
+	              <div class="radio mb-3">
+	                <label class="radio-label">
+	                  <input name="status" type="radio" value="terpanen" {{ $kandangdetails->status =='terpanen' ? 'checked' : null }}>terpanen<i class="input-frame"></i>
+	                </label>
+	              </div>
+	            </div>
+	          </div>
+	          <button type="submit" class="btn btn-sm btn-primary">Update</button>
 	        </form>
 	      </div>
 	    </div>

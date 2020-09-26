@@ -109,9 +109,13 @@
               </div>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link" href="#" id="appsDropdown" data-toggle="dropdown" aria-expanded="false">
+             {{--  <a class="nav-link" href="{{ route('logout') }}" id="appsDropdown" data-toggle="dropdown" aria-expanded="false">
                 <i class="mdi mdi-logout mdi-1x"></i>
-              </a>
+              </a> --}}
+              <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button class="btn social-icon-btn btn-rounded"><i class="mdi mdi-logout mdi-1x"></i></button>
+              </form>
             </li>
           </ul>
         </div>

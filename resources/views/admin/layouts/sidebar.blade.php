@@ -76,7 +76,7 @@
   ];
 
   $user=[
-    'url'=>'#',
+    'url'=>'/admin/user/',
     'title'=>'User',
     'model'=>'',
     'icon'=>'mdi mdi-account link-icon'
@@ -90,11 +90,11 @@
     'child'=>[
       [
         'title'=>'Buat Order',
-        'url'=>'#'
+        'url'=>'/admin/order/create'
       ],
       [
         'title'=>'Riwayat Order',
-        'url'=>'#'
+        'url'=>'/admin/order/'
       ],
     ]
   ];
@@ -107,11 +107,11 @@
     'child'=>[
       [
         'title'=>'Buat data',
-        'url'=>'#'
+        'url'=>'/admin/ayam_cek/create'
       ],
       [
         'title'=>'Riwayat kondisi',
-        'url'=>'#'
+        'url'=>'/admin/ayam_cek'
       ],
     ]
   ];
@@ -124,7 +124,7 @@
     'child'=>[
       [
         'title'=>'data bibit',
-        'url'=>'#'
+        'url'=>'/admin/kandang_detail'
       ],
       [
         'title'=>'bibit baru',
@@ -142,7 +142,7 @@
             <img class="profile-img img-lg rounded-circle" src="/Label_Admin/src/assets/images/profile/male/image_1.png" alt="profile image">
           </div>
           <div class="info-wrapper">
-            <p class="user-name">Allen Clerk</p>
+            <p class="user-name">{{ auth()->user()->name }}</p>
           </div>
         </div>
         {{-- area menu --}}

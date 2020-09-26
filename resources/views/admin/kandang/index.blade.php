@@ -19,6 +19,7 @@
 	              <th>No</th>
 	              <th>Nama</th>
 	              <th>Kode</th>
+	              <th>Status</th>
 	              <th>Aksi</th>
 	            </tr>
 	          </thead>
@@ -44,6 +45,7 @@
 					{ data:'id'},
 					{ data:'nama'},
 					{ data:'kode'},
+					{ data:'status'},
 					{ data:'aksi', orderable: false},
 				]
 			});

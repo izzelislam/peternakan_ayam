@@ -16,11 +16,12 @@ class KandangSeeder extends Seeder
         Kandang::truncate();
         $faker=Factory::create('id_ID');
 
-        $this->command->getOutput()->progressStart(20);
-        for ($i=0; $i <=20 ; $i++) { 
+        $this->command->getOutput()->progressStart(5);
+        for ($i=0; $i <=5 ; $i++) { 
         	Kandang::create([
         		'nama'=>$faker->safeColorName,
         		'kode'=>$faker->postcode,
+                'status'=>'kosong',
         	]);
         $this->command->getOutput()->progressAdvance();
         }

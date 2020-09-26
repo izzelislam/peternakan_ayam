@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Kategori;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class KategoriController extends Controller
 {
@@ -31,7 +32,9 @@ class KategoriController extends Controller
             'harga'=>'required',
         ]);
 
+        $request->merge(['status'=>'habis']);
         $this->model->create($request->all());
+        Alert::success('Kategori', 'Berhasil Tambah Kategori !');
         return redirect()->route('kategori.index');
     }
 
@@ -44,12 +47,14 @@ class KategoriController extends Controller
     public function update(Request $request,$id)
     {
         $this->model->find($id)->update($request->all());
+        Alert::success('Kategori', 'Berhasil Edit Kategori !');
         return redirect()->route('kategori.index');
     }
 
     public function destroy($id)
     {
         $this->model->find($id)->delete();
+        Alert::warning('Kategori', 'Berhasil Hapus Kategori !');
         return redirect()->route('kategori.index');
     }
 }

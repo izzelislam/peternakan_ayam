@@ -14,11 +14,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::prefix('/admin')->namespace('Admin')->name('')->group(function(){
-	Route::get('/','DashboardController@index');
+Route::prefix('/admin')->namespace('Admin')->name('')->middleware('auth')->group(function(){
+	Route::get('/','DashboardController@index')->name('admin');
 	Route::resource('/kategori','KategoriController');	
 	Route::resource('/kandang','KandangController');	
 	Route::resource('/suplier','SuplierController');	
 	Route::resource('/pelanggan','PelangganController');	
 	Route::resource('/kandang_detail','KandangDetailController');	
+	Route::resource('/ayam_cek','AyamCekController');	
+	Route::resource('/order','OrderController');	
+	Route::resource('/user','UserController');	
+});
+
+Route::namespace('Admin')->group(function(){
+	Route::get('/','AuthController@index')->name('login');
+	Route::post('/login','AuthController@loginProses')->name('login-proses');
+	Route::post('/logout','AuthController@logout')->name('logout');
 });

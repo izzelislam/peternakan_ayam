@@ -18,6 +18,7 @@ class CreateKategoriTable extends Migration
             $table->string('nama');
             $table->integer('harga');
             $table->integer('stok')->nullable();
+            $table->enum('status',['tersedia','habis']);
             $table->timestamps();
         });
     }
