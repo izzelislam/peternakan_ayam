@@ -31,9 +31,8 @@
 	               	@endforeach
 	              </select>
 	          	</div>
-	          	<div>
-	          		
-	          	</div>
+
+	
 	          </div>
 
 	          <template x-for="(row,index) in rows" :key="row">
@@ -114,7 +113,7 @@
       		@else
       			rows:[Object.assign({},InialRow),],
       			total:0,
-      			pelanggan_id:null,
+      			pelanggan_id:'',
       		@endif
 
       		
