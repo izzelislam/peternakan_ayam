@@ -34,8 +34,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $stok=Kategori::all();
-
-        if ($stok->sum('qty') < array_sum($request->qty)) {
+        if ($stok->sum('stok') < array_sum($request->qty)) {
             return redirect()->back()->with('stok','stok yang tersedia tidak cukup');
         }else{
 
@@ -87,7 +86,7 @@ class OrderController extends Controller
     {
         $stok=Kategori::all();
 
-        if ($stok->sum('qty') < array_sum($request->qty)) {
+        if ($stok->sum('stok') < array_sum($request->qty)) {
             return redirect()->back()->with('stok','stok yang tersedia tidak cukup');
         }else{
             $order=Order::findOrFail($id);
@@ -102,7 +101,7 @@ class OrderController extends Controller
                 for ($i=0; $i < count($order->OrderDetail) ; $i++) { 
                     # code...
                 }
-                
+
                 $order->OrderDetail()->create([
                     'kategori_id'=>$request->kategori_id[$i],
                     'harga'=>$request->harga[$i],
