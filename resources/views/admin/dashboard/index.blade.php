@@ -129,9 +129,12 @@
 			</div>
 		</div>
 
-		<div class="row">
-			<div class="col-md-12 card">
+		<div class="row p-2  d-flex justify-content-between">
+			<div class="col-md-8 card">
 				<div class="laku" style="height: 300px;"></div>
+			</div>
+			<div class="col-md-4 card">
+				<div class="sakit" style="height: 300px;"></div>
 			</div>
 		</div>
 	</div>
@@ -144,8 +147,7 @@
 <script>
     @php
         $kategoris = DB::table('kategori')->get();
-        $jual = DB::table('order')->orderBy('created_at', 'desc')->paginate(10);
-        // dd($menustock);
+        $jual = DB::table('order_detail')->orderBy('created_at', 'desc')->get();
     @endphp
     
      var chart = new Chartisan({
@@ -159,16 +161,43 @@
                     ]
                 },
                 datasets: [
-                    { name: 'Stok Ayam', values: [ @foreach($jual as $ktg) {{ $ktg->total }}, @endforeach ]},
-                    { name: 'Penjualan', values: [ @foreach($kategoris as $ktg) {{ $ktg->harga }}, @endforeach ]},
+                    { name: 'Penjualan', values: [ @foreach($jual as $ktg) {{ $ktg->qty }}, @endforeach ]},
                 ]
             },
             hooks: new ChartisanHooks()
                 .datasets('bar')
                 .colors()
                 .legend({ position: 'top' })
-                .title('Grafik Pemasukan')
-                .datasets([{ type: 'line', fill: false }, 'bar']),
+                .title('Grafik Penjualan')
+                .datasets(['bar']),
         })
+
+     	var chart = new Chartisan({
+     	           el: '.sakit',
+     	           data: {
+     	               chart: {
+     	                   labels: [
+     	                       'ayam mati',
+     	                       'ayam sakit',
+     	                       'ayam sehat',
+     	                   ]
+     	               },
+     	               datasets: [
+     	                   {
+     	                       name: '# of Votes',
+     	                       values: [
+     	                           {{ $cek->sum('ayam_mati') }},
+     	                           {{ $cek->sum('ayam_sakit') }},
+     	                           {{ $ayamall->sum('jumlah_akhir') }},
+     	                       ],
+     	                   }
+     	               ]
+     	           },
+     	           hooks: new ChartisanHooks()
+     	               .datasets('pie')
+     	               .pieColors()
+     	               .title('Grafik Kondisi Ayam')
+     	               .legend({ position: 'bottom' })
+     	       })
 </script>
 @endsection

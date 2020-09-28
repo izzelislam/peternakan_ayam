@@ -9,6 +9,7 @@ use App\Model\Kategori;
 use App\Model\Order;
 use App\Model\Pelanggan;
 use App\Charts\OrderChart;
+use App\Model\AyamCek;
 
 
 class DashboardController extends Controller
@@ -18,7 +19,9 @@ class DashboardController extends Controller
     	$order=Order::all();
     	$pelanggan=Pelanggan::all();
     	$kandang_detail=KandangDetail::where('status','diternak');
+    	$ayamall=KandangDetail::all();
     	$kategoris=Kategori::all();
-    	return view('admin.dashboard.index',compact('kategoris','order','pelanggan','kandang_detail'));
+    	$cek=AyamCek::all();
+    	return view('admin.dashboard.index',compact('kategoris','order','pelanggan','kandang_detail','cek','ayamall'));
     }
 }
