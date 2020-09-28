@@ -18,6 +18,7 @@ class CreatePelangganTable extends Migration
             $table->string('nama');
             $table->string('no_hp')->unique();
             $table->text('alamat');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -15,7 +15,7 @@ class SuplierController extends Controller
 	}
     public function index()
     {
-    	$supliers=Suplier::orderBy('id','desc')->paginate(10);
+    	$supliers=Suplier::orderBy('id','desc')->get();
     	return view('admin.suplier.index',compact('supliers'));
     }
 

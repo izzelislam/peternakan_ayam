@@ -19,6 +19,7 @@ class CreateOrderTable extends Migration
             $table->foreignId('pelanggan_id');
             $table->enum('status',['selesai','proses','pending','batal']);
             $table->integer('total')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

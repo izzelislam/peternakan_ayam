@@ -19,7 +19,7 @@ class KandangDetailController extends Controller
 	}
     public function index()
     {
-    	$kandangdetails=$this->model->all();
+    	$kandangdetails=$this->model->orderBy('created_at','desc')->get();
     	return view('admin.kandang_detail.index',compact('kandangdetails'));
     }
 
@@ -37,7 +37,7 @@ class KandangDetailController extends Controller
         Kandang::where('id',$request['kandang_id'])->update(['status'=>'terpakai']);
     	$request->merge(['status'=>'diternak']);
     	$this->model->create($request->all());
-        Alert::success('Order', 'Berhasil Order !');
+        Alert::success('Bibit', 'Berhasil Tambah Bibit !');
 
     	return redirect()->route('kandang_detail.index');
     }
@@ -56,6 +56,7 @@ class KandangDetailController extends Controller
     {
         $data=$this->model->find($id);
         $kategori=Kategori::find($data->kategori_id);
+
         if ($request->status == 'terpanen') {
             $kandang=Kandang::where('id',$data['kandang_id'])->update(['status'=>'kosong']);
 
@@ -68,8 +69,9 @@ class KandangDetailController extends Controller
             $kandang=Kandang::where('id',$request['kandang_id'])->update(['status'=>'terpakai']);
             $kategori->update(['stok'=>$kategori->stok-$data->jumlah_akhir]);
         }
+
         $data->update($request->all());
-        Alert::warning('Edit', 'Berhasil Edit !');
+        Alert::success('Edit', 'Berhasil Edit !');
 
         return redirect()->route('kandang_detail.index');
     }
@@ -81,5 +83,26 @@ class KandangDetailController extends Controller
         $data->delete();
         Alert::warning('Hapus', 'Data Berhasil Di hapus !');
         return redirect()->back();
+    }
+
+    public function panen($id)
+    {
+        $data=$this->model->find($id);
+        $data->update(['status'=>'terpanen']);
+        $kategori=Kategori::find($data->kategori_id);
+
+        if ($data->jumlah_akhir == null) {
+                $data->update(['jumlah_akhir'=>$data->jumlah_awal]);
+        }
+
+        // dd($data->jumlah_akhir);
+
+        $kategori->update(['stok'=>$kategori->stok+$data->jumlah_akhir]);
+        Kandang::where('id',$data['kandang_id'])->update(['status'=>'kosong']);
+ 
+        Alert::success('Panen', 'Terpanen !');
+        return redirect()->back();
+
+
     }
 }

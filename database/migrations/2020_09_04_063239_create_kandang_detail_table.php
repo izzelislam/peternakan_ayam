@@ -22,6 +22,7 @@ class CreateKandangDetailTable extends Migration
             $table->integer('jumlah_akhir')->nullable();
             $table->text('keterangan');
             $table->enum('status',['terpanen','diternak']);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

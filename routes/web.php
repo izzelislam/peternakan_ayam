@@ -21,6 +21,7 @@ Route::prefix('/admin')->namespace('Admin')->name('')->middleware('auth')->group
 	Route::resource('/suplier','SuplierController');	
 	Route::resource('/pelanggan','PelangganController');	
 	Route::resource('/kandang_detail','KandangDetailController');	
+	Route::put('/panen/{id}','KandangDetailController@panen')->name('panen');	
 	Route::resource('/ayam_cek','AyamCekController');	
 	Route::resource('/order','OrderController');	
 	Route::resource('/user','UserController');	

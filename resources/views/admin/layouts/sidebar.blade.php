@@ -1,5 +1,5 @@
 @php
-/*$current_path='/'.request()->path();*/
+$current_path='/'.request()->path();
   $dashboard=[
     'url'=>'/admin',
     'title'=>'Dashboard',
@@ -43,16 +43,16 @@
 
   $kategori=[
     'url'=>'/admin/kategori',
-    'title'=>'kategori',
+    'title'=>'Spesies Ayam',
     'model'=>'',
     'icon'=>'mdi mdi-leaf link-icon',
     'child'=>[
       [
-        'title'=>'Data Kategori',
+        'title'=>'Data Spesies',
         'url'=>'/admin/kategori'
       ],
       [
-        'title'=>'Buat Kategori',
+        'title'=>'Buat Spesies',
         'url'=>'/admin/kategori/create'
       ],
     ]
@@ -151,7 +151,7 @@
           @foreach ($menus as $index=>$menu)
             
             @if (isset($menu['child']))
-         {{--    @php
+            @php
               $IsActive=false;
 
               foreach ($menu['child'] as $child) {
@@ -160,9 +160,9 @@
                 }
                 
               }
-            @endphp --}}
+            @endphp
 
-              <li class="{{-- {{ $IsActive ? 'active' :'null' }} --}}">
+              <li class="{{ $IsActive ? 'active' :'null' }}">
                 <a href="#" data-toggle="collapse" aria-expanded="false" data-target="#menu{{ $index }}">
                   <span class="link-title">{{ $menu['title'] }}</span>
                   <i class="{{ $menu['icon'] }}"></i>
@@ -170,7 +170,7 @@
                 <ul class="collapse navigation-submenu" id="menu{{ $index }}">
                   @foreach ($menu['child'] as $child)
     
-                      <li class="{{-- {{ $child['url'] == $current_path ? 'active' :'null' }} --}}">
+                      <li class="{{ $child['url'] == $current_path ? 'active' :'null' }}">
                         <a href="{{ $child['url'] }}">{{ $child['title'] }}</a>
                       </li>
  
@@ -178,7 +178,7 @@
                 </ul>
               </li>
             @else
-              <li class="{{-- {{ $menu['url'] == $current_path ? 'active' :'null' }} --}}">
+              <li class="{{ $menu['url'] == $current_path ? 'active' :'null' }}">
                 <a href="{{ $menu['url'] }}">
                   <span class="link-title">{{ $menu['title'] }}</span>
                   <i class="{{ $menu['icon'] }}"></i>

@@ -16,6 +16,16 @@
 	
 	<div class="col-lg-12 equel-grid">
 	  <div class="grid">
+	  	
+	  	@if (session('stok'))
+	  		<div class="alert alert-warning alert-dismissible fade show" role="alert">
+	  		  <strong>{{ session('stok') }}</strong>
+	  		  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	  		    <span aria-hidden="true">&times;</span>
+	  		  </button>
+	  		</div>
+	  	@endif
+
 	    <div class="grid-body">
 	      <div class="item-wrapper">
 	        <form method="POST" action="{{ $action }}" x-data="dataorder()" >
@@ -24,10 +34,10 @@
 	          <div class="row mb-4">
 	          	<div class="col-md-3">
 	          	  <label>Nama Pelanggan</label>
-	              <select class="custom-select pelanggan" name="pelanggan_id">
+	              <select class="custom-select pelanggan" name="pelanggan_id" x-model="pelanggan_id">
 	               	<option>-- pilih pelanggan --</option>
 	               	@foreach ($pelanggan as $plg)
-	               		<option value="{{ $plg->id }}">{{ $plg->nama }}</option>
+	               		<option value="{{ old('pelanggan_id',$plg->id ) }}">{{ $plg->nama }}</option>
 	               	@endforeach
 	              </select>
 	          	</div>

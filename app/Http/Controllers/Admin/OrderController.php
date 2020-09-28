@@ -18,7 +18,7 @@ class OrderController extends Controller
     
     public function index()
     {
-        $order=$this->model->all();
+        $order=$this->model->orderBy('created_at','desc')->get();
         return view('admin.order.index',compact('order'));
     }
 
@@ -33,11 +33,11 @@ class OrderController extends Controller
     
     public function store(Request $request)
     {
-        // for ($i=0; $i < count($request->kategori_id) ; $i++) { 
-        //     if ( $request->qty[$i] > Kategori::find($request->kategori_id[$i])->pluck('stok')) {
-                
-        //     }
-        // }
+        $stok=Kategori::all();
+
+        if ($stok->sum('qty') < array_sum($request->qty)) {
+            return redirect()->back()->with('stok','stok yang tersedia tidak cukup');
+        }else{
 
         $order=$this->model::create([
             'user_id'=>auth()->user()->id,
@@ -54,8 +54,14 @@ class OrderController extends Controller
                 'sub_total'=>$request->sub_total[$i],
             ]);
             $ctg=Kategori::find($request->kategori_id[$i]);
-            $ctg->update(['stok'=>$ctg->stok - $request->qty[$i]]);
+
+            if ($request->qty[$i] > $ctg->stok ) {
+                return redirect()->back()->with('stok','stok yang tersedia tidak cukup');
+            }else{
+                $ctg->update(['stok'=>$ctg->stok - $request->qty[$i]]);
+            }
         }
+      }
         Alert::success('Order', 'Berhasil Order !');
         return redirect(route('order.index'));
     }
@@ -79,26 +85,36 @@ class OrderController extends Controller
    
     public function update(Request $request, $id)
     {
-        $order=Order::findOrFail($id);
-        $order->OrderDetail()->delete();
+        $stok=Kategori::all();
 
-        $order->update([
-            'pelanggan_id'=>$request->pelanggan_id,
-            'total'=>$request->total,
-        ]);
+        if ($stok->sum('qty') < array_sum($request->qty)) {
+            return redirect()->back()->with('stok','stok yang tersedia tidak cukup');
+        }else{
+            $order=Order::findOrFail($id);
+            $order->OrderDetail()->delete();
 
-        for ($i=0; $i < count($request->kategori_id) ; $i++) { 
-            $order->OrderDetail()->create([
-                'kategori_id'=>$request->kategori_id[$i],
-                'harga'=>$request->harga[$i],
-                'qty'=>$request->qty[$i],
-                'sub_total'=>$request->sub_total[$i],
+            $order->update([
+                'pelanggan_id'=>$request->pelanggan_id,
+                'total'=>$request->total,
             ]);
-            $ctg=Kategori::find($request->kategori_id[$i]);
-            $ctg->update(['stok'=>$ctg->stok - $request->qty[$i]]);
+
+            for ($i=0; $i < count($request->kategori_id) ; $i++) { 
+                for ($i=0; $i < count($order->OrderDetail) ; $i++) { 
+                    # code...
+                }
+                
+                $order->OrderDetail()->create([
+                    'kategori_id'=>$request->kategori_id[$i],
+                    'harga'=>$request->harga[$i],
+                    'qty'=>$request->qty[$i],
+                    'sub_total'=>$request->sub_total[$i],
+                ]);
+                $ctg=Kategori::find($request->kategori_id[$i]);
+                $ctg->update(['stok'=>$ctg->stok - $request->qty[$i]]);
+            }
+            Alert::success('Order', 'Berhasil Edit Order !');
+            return redirect(route('order.index'));
         }
-        Alert::success('Order', 'Berhasil Edit Order !');
-        return redirect(route('order.index'));
 
 
     }

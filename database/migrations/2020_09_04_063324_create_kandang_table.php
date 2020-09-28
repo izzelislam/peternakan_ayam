@@ -18,6 +18,7 @@ class CreateKandangTable extends Migration
             $table->string('nama');
             $table->string('kode');
             $table->enum('status',['kosong','terpakai']);
+            $table->softdeletes();
             $table->timestamps();
         });
     }

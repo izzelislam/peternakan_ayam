@@ -11,11 +11,11 @@ class AyamCek extends Model
 
     public function User()
     {
-    	return $this->belongsTo('App\Model\User');
+    	return $this->belongsTo('App\Model\User')->withTrashed();
     }
 
     public function KandangDetail()
     {
-    	return $this->belongsTo('App\Model\KandangDetail');
+    	return $this->belongsTo('App\Model\KandangDetail')->withTrashed();
     }
 }

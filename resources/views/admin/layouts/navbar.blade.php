@@ -10,12 +10,7 @@
           <button class="t-header-toggler t-header-mobile-toggler d-block d-lg-none">
             <i class="mdi mdi-menu"></i>
           </button>
-          <form action="#" class="t-header-search-box">
-            <div class="input-group">
-              <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Search" autocomplete="off">
-              <button class="btn btn-primary" type="submit"><i class="mdi mdi-arrow-right-thick"></i></button>
-            </div>
-          </form>
+
           
           <ul class="nav ml-auto">
             <li class="nav-item dropdown">
@@ -53,53 +48,6 @@
                     <div class="content-wrapper">
                       <small class="name">Authentication Required</small>
                       <small class="content-text">Please verify your password to continue using cloud services</small>
-                    </div>
-                  </div>
-                </div>
-                <div class="dropdown-footer">
-                  <a href="#">View All</a>
-                </div>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link" href="#" id="messageDropdown" data-toggle="dropdown" aria-expanded="false">
-                <i class="mdi mdi-message-outline mdi-1x"></i>
-                <span class="notification-indicator notification-indicator-primary notification-indicator-ripple"></span>
-              </a>
-              <div class="dropdown-menu navbar-dropdown dropdown-menu-right" aria-labelledby="messageDropdown">
-                <div class="dropdown-header">
-                  <h6 class="dropdown-title">Messages</h6>
-                  <p class="dropdown-title-text">You have 4 unread messages</p>
-                </div>
-                <div class="dropdown-body">
-                  <div class="dropdown-list">
-                    <div class="image-wrapper">
-                      <img class="profile-img" src="/Label_Admin/src/assets/images/profile/male/image_1.png" alt="profile image">
-                      <div class="status-indicator rounded-indicator bg-success"></div>
-                    </div>
-                    <div class="content-wrapper">
-                      <small class="name">Clifford Gordon</small>
-                      <small class="content-text">Lorem ipsum dolor sit amet.</small>
-                    </div>
-                  </div>
-                  <div class="dropdown-list">
-                    <div class="image-wrapper">
-                      <img class="profile-img" src="/Label_Admin/src/assets/images/profile/female/image_2.png" alt="profile image">
-                      <div class="status-indicator rounded-indicator bg-success"></div>
-                    </div>
-                    <div class="content-wrapper">
-                      <small class="name">Rachel Doyle</small>
-                      <small class="content-text">Lorem ipsum dolor sit amet.</small>
-                    </div>
-                  </div>
-                  <div class="dropdown-list">
-                    <div class="image-wrapper">
-                      <img class="profile-img" src="/Label_Admin/src/assets/images/profile/male/image_3.png" alt="profile image">
-                      <div class="status-indicator rounded-indicator bg-warning"></div>
-                    </div>
-                    <div class="content-wrapper">
-                      <small class="name">Lewis Guzman</small>
-                      <small class="content-text">Lorem ipsum dolor sit amet.</small>
                     </div>
                   </div>
                 </div>

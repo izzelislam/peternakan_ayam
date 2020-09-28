@@ -20,6 +20,7 @@ class CreateOrderDetailTable extends Migration
             $table->integer('harga');
             $table->integer('qty');
             $table->integer('sub_total');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

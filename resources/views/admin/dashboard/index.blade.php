@@ -6,55 +6,43 @@
 		<div class="row">
 		  <div class="col-md-3 col-sm-6 col-6 equel-grid">
 		    <div class="grid">
-		      <div class="grid-body text-gray">
+		      <div class="grid-body text-light bg-dark">
 		        <div class="d-flex justify-content-between">
 		          <p>{{ $pelanggan->count() }}&nbsp; Pelanggan</p>
 		        </div>
-		        <p class="text-black">Pelanggan</p>
-		        <div class="wrapper w-50 mt-4">
-		          <canvas height="45" id="stat-line_1"></canvas>
-		        </div>
+		        <p class="text-light font-weight-bold">Pelanggan</p>
 		      </div>
 		    </div>
 		  </div>
 		  <div class="col-md-3 col-sm-6 col-6 equel-grid">
 		    <div class="grid">
-		      <div class="grid-body text-gray">
+		      <div class="grid-body text-light bg-success">
 		        <div class="d-flex justify-content-between">
 		          
 		          	<p>{{ $kategoris->sum('stok') }}&nbsp; Ekor</p>
 		          
 		        </div>
-		        <p class="text-black">Stok Ayam</p>
-		        <div class="wrapper w-50 mt-4">
-		          <canvas height="45" id="stat-line_2"></canvas>
-		        </div>
+		        <p class="text-light font-weight-bold">Stok Ayam</p>
 		      </div>
 		    </div>
 		  </div>
 		  <div class="col-md-3 col-sm-6 col-6 equel-grid">
 		    <div class="grid">
-		      <div class="grid-body text-gray">
+		      <div class="grid-body text-light bg-primary">
 		        <div class="d-flex justify-content-between">
 		          <p>{{ $kandang_detail->count() }} &nbsp; Kandang</p>
 		        </div>
-		        <p class="text-black">Kandang Aktiv</p>
-		        <div class="wrapper w-50 mt-4">
-		          <canvas height="45" id="stat-line_3"></canvas>
-		        </div>
+		        <p class="text-light font-weight-bold">Kandang Aktiv</p>
 		      </div>
 		    </div>
 		  </div>
 		  <div class="col-md-3 col-sm-6 col-6 equel-grid">
 		    <div class="grid">
-		      <div class="grid-body text-gray">
+		      <div class="grid-body text-light bg-warning" >
 		        <div class="d-flex justify-content-between">
 		          <p>{{ $order->count() }}&nbsp;</p>
 		        </div>
-		        <p class="text-black">Order</p>
-		        <div class="wrapper w-50 mt-4">
-		          <canvas height="45" id="stat-line_4"></canvas>
-		        </div>
+		        <p class="text-light font-weight-bold">Order</p>
 		      </div>
 		    </div>
 		  </div>
@@ -77,13 +65,13 @@
 			        </thead>
 			        <tbody>
 			          
-			          @foreach ($order as $ord)
+			          @foreach ($order->take(4) as $ord)
 			            <tr>
 			            	<td class="pr-0 pl-4">
 			            	  <img class="profile-img img-sm" src="{{  Avatar::create($ord->Pelanggan->nama)->toBase64()  }}" alt="profile image">
 			            	</td>
 			            	<td class="pl-md-0">
-			            	  <small class="text-black font-weight-medium d-block">{{ $ord->pelanggan_id }}</small>
+			            	  <small class="text-black font-weight-medium d-block">{{ $ord->Pelanggan->nama }}</small>
 			            	  <span class="text-gray">
 			            	    <span class="status-indicator rounded-indicator small bg-primary"></span>{{ $ord->status }}</span>
 			            	</td>
@@ -96,7 +84,6 @@
 			          
 			        </tbody>
 			      </table>
-			      {{ $order->links() }}
 			    </div>
 			    <a class="border-top px-3 py-2 d-block text-gray" href="{{ route('order.index') }}">
 			      <small class="font-weight-medium"><i class="mdi mdi-chevron-down mr-2"></i>View All Order History</small>
@@ -141,5 +128,47 @@
 			  </div>
 			</div>
 		</div>
+
+		<div class="row">
+			<div class="col-md-12 card">
+				<div class="laku" style="height: 300px;"></div>
+			</div>
+		</div>
 	</div>
+@endsection
+@section('end-script')
+<!-- Charting library -->
+<script src="https://unpkg.com/chart.js@2.9.3/dist/Chart.min.js"></script>
+<!-- Chartisan -->
+<script src="https://unpkg.com/@chartisan/chartjs@^2.1.0/dist/chartisan_chartjs.umd.js"></script>
+<script>
+    @php
+        $kategoris = DB::table('kategori')->get();
+        $jual = DB::table('order')->orderBy('created_at', 'desc')->paginate(10);
+        // dd($menustock);
+    @endphp
+    
+     var chart = new Chartisan({
+            el: '.laku',
+            data: {
+                chart: {
+                    labels: [
+                        @foreach($jual as $kategori)
+                            '{{ $kategori->created_at }}',
+                        @endforeach
+                    ]
+                },
+                datasets: [
+                    { name: 'Stok Ayam', values: [ @foreach($jual as $ktg) {{ $ktg->total }}, @endforeach ]},
+                    { name: 'Penjualan', values: [ @foreach($kategoris as $ktg) {{ $ktg->harga }}, @endforeach ]},
+                ]
+            },
+            hooks: new ChartisanHooks()
+                .datasets('bar')
+                .colors()
+                .legend({ position: 'top' })
+                .title('Grafik Pemasukan')
+                .datasets([{ type: 'line', fill: false }, 'bar']),
+        })
+</script>
 @endsection

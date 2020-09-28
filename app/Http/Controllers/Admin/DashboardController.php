@@ -15,7 +15,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-    	$order=Order::paginate(4);
+    	$order=Order::all();
     	$pelanggan=Pelanggan::all();
     	$kandang_detail=KandangDetail::where('status','diternak');
     	$kategoris=Kategori::all();

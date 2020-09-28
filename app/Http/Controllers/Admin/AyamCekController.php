@@ -18,7 +18,7 @@ class AyamCekController extends Controller
 
     public function index()
     {
-    	$ayamceks=$this->model->all();
+    	$ayamceks=$this->model->orderBy('created_at','desc')->get();
     	return view('admin.ayamcek.index',compact('ayamceks'));
     }
 
@@ -31,19 +31,18 @@ class AyamCekController extends Controller
     public function store (Request $request)
     {
 
-        if ( ($request->ayam_sakit && $request->ayam_mati) >= 0 ) {
-                $jumlah_awal=KandangDetail::find($request->kandang_detail_id);
-                $ayam_masalah=$request->ayam_sakit+$request->ayam_mati;
-    		if ($jumlah_awal->jumlah_akhir == null) {
-                $jumlah_akhir=$jumlah_awal->jumlah_awal-$ayam_masalah;         
-                DB::table('kandang_detail')->where('id',$request->kandang_detail_id)->update(['jumlah_akhir'=>$jumlah_akhir]);                  
-            }else{
-                $jumlah_final=$jumlah_awal->jumlah_akhir-$ayam_masalah;         
-                DB::table('kandang_detail')->where('id',$request->kandang_detail_id)->update(['jumlah_akhir'=>$jumlah_final]);
-            }	 		
-    	}
-        else{
-            dd('gak ada');
+        $sum=$request->ayam_mati+$request->ayam_sakit;
+        $data_kd=KandangDetail::find($request->kandang_detail_id);
+   
+
+        $sum=$request->ayam_mati+$request->ayam_sakit;
+
+        if (empty($data_kd->jumlah_akhir)) {
+            $final=$data_kd->jumlah_awal-($sum);
+            $data_kd->update(['jumlah_akhir'=>$final]);
+        }else{
+            $final=$data_kd->jumlah_akhir-($sum);
+            $data_kd->update(['jumlah_akhir'=>$final]);
         }
 
     	$request->merge(['user_id'=>auth()->user()->id]);
@@ -63,11 +62,29 @@ class AyamCekController extends Controller
     public function update(Request $request , $id)
     {
         $data=$this->model->find($id);
-        $data->update($request->all());
-
+        
+        $sum_old=$data->ayam_mati+$data->ayam_sakit;
+        $sum_new=$request->ayam_mati+$request->ayam_sakit;
         $data_kd=KandangDetail::find($data->kandang_detail_id);
-        $final=$data_kd->jumlah_awal-($data->ayam_mati+$data->ayam_sakit);
-        $data_kd->update(['jumlah_akhir'=>$final]);
+        
+        // dd($sum_old);
+
+        if ($sum_old > $sum_new) {
+            $sisa=$sum_old-$sum_new;
+            // dd('lebih gede'.'='.$sisa);
+            $final=$data_kd->jumlah_akhir + $sisa;
+            // dd('lebih gede'.'='.$final);
+            $data_kd->update(['jumlah_akhir'=>$final]);
+        }else{
+            // dd('lebih kecil');
+            $sisa=$sum_new-$sum_old;
+            // dd('lebih kecil'.'='.$sisa);
+            $final=$data_kd->jumlah_akhir - $sisa;
+            // dd('lebih kecil'.'='.$final);
+            $data_kd->update(['jumlah_akhir'=>$final]);
+        }
+
+        $data->update($request->all());
         Alert::success('Cek AYam', 'Berhasil Edit Data !');
         return redirect()->route('ayam_cek.index');
     }
