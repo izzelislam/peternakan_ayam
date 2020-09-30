@@ -50,7 +50,7 @@
                   </form>
                   <div class="signup-link">
                     <p>Don't have an account yet?</p>
-                    <a href="#">Sign Up</a>
+                    <a href="{{ route('register') }}">Sign Up</a>
                   </div>
                 </div>
               </div>

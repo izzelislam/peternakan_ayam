@@ -1,6 +1,6 @@
 <nav class="t-header">
       <div class="t-header-brand-wrapper">
-        <a href="index.html">
+        <a href="{{ route('admin') }}">
           <img class="logo" src="/Label_Admin/src/assets/images/logo.svg" alt="">
           <img class="logo-mini" src="/Label_Admin/src/assets/images/logo_mini.svg" alt="">
         </a>

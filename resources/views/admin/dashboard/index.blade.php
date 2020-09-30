@@ -147,7 +147,7 @@
 <script>
     @php
         $kategoris = DB::table('kategori')->get();
-        $jual = DB::table('order_detail')->orderBy('created_at', 'desc')->get();
+        $jual = DB::table('order_detail')->orderBy('created_at', 'desc')->paginate(25);
     @endphp
     
      var chart = new Chartisan({

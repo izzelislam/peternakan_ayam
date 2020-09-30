@@ -10,11 +10,17 @@
 	        @csrf
 	          <div class="form-group">
 	            <label for="inputEmail1">Nama</label>
-	            <input type="text" name="nama" class="form-control" id="inputEmail1" placeholder="Enter your email">
+	            <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" id="inputEmail1" placeholder="Enter your email">
+	            @error('nama')
+	            	<div class="invalid-feedback">{{ $message }}</div>
+	            @enderror
 	          </div>
 	          <div class="form-group">
 	            <label for="inputPassword1">Harga</label>
-	            <input type="number" name="harga" class="form-control" id="inputPassword1" placeholder="Enter your password">
+	            <input type="number" name="harga"  class="form-control @error('harga') is-invalid @enderror" id="inputPassword1" placeholder="Enter your password">
+	            @error('harga')
+	            	<div class="invalid-feedback">{{ $message }}</div>
+	            @enderror
 	          </div>
 	          <button type="submit" class="btn btn-sm btn-primary">Buat</button>
 	        </form>

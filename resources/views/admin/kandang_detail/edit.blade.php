@@ -16,39 +16,51 @@
 	        @method('PUT')
 	          <div class="form-group">       
 	        	<label>Suplier</label>
-	              <select class="custom-select select-suplier" name="suplier_id">
+	              <select class="custom-select select-suplier @error('suplier_id') is-invalid @enderror" name="suplier_id">
 	                @foreach ($supliers as $suplier)
 	                	<option value="{{ $suplier->id }}" {{ $suplier->id == $kandangdetails->suplier_id ? 'selected' :'null' }}>{{ $suplier->nama }}</option>
 	                @endforeach
 	              </select>
+	              @error('suplier_id')
+	              	<div class="invalid-feedback"></div>
+	              @enderror
 	          </div>
 
 	          <div class="form-group">       
 	        	<label>Kategori</label>
-	              <select class="custom-select select-suplier" name="kategori_id">
+	              <select class="custom-select select-suplier  @error('kategori_id') is-invalid @enderror" name="kategori_id">
 	                @foreach ($kategoris as $kategori)
 	                	<option value="{{ $kategori->id }}" {{ $kategori->id == $kandangdetails->kategori_id ? 'selected' : 'null' }} >{{ $kategori->nama }}</option>
 	                @endforeach
 	              </select>
+	              @error('kategori_id')
+	              	<div class="invalid-feedback"></div>
+	              @enderror
 	          </div>
 
 	            <div class="form-group">       
 	          	<label>kandang</label>
-	                <select class="custom-select select-suplier" name="kandang_id">
+	                <select class="custom-select select-suplier @error('kandang_id') is-invalid @enderror" name="kandang_id">
 	                  @foreach ($kandangs as $kandang)
 	                  	<option value="{{ $kandang->id }}" {{ $kandang->id == $kandangdetails->kandang_id ? 'selected' : null }}>{{ $kandang->nama }}</option>
 	                  @endforeach
 	                </select>
+	                @error('kandang_id')
+	              		<div class="invalid-feedback"></div>
+	              	@enderror
 	            </div>
 
 	          <div class="form-group">
 	            <label for="inputPassword1">Jumlah</label>
-	            <input type="number" name="jumlah_awal" class="form-control" id="inputPassword1" placeholder="Enter phone number" value="{{ old('jumlah_awal',$kandangdetails->jumlah_awal) }}">
+	            <input type="number" name="jumlah_awal" class="form-control  @error('jumlah_awal') is-invalid @enderror" id="inputPassword1" placeholder="Enter phone number" value="{{ old('jumlah_awal',$kandangdetails->jumlah_awal) }}">
+	            @error('jumlah')
+	            	<div class="invalid-feedback"></div>
+	            @enderror
 	          </div>
 	          <div class="form-group">
 	            <label for="inputPassword1">Keterangan</label>
 	            <div class="col-md-12 showcase_content_area">
-	              <textarea class="form-control" name="keterangan" id="inputType9" cols="12" rows="5">{{ old('keterangan',$kandangdetails->keterangan) }}</textarea>
+	              <textarea class="form-control @error('keterangan') is-invalid @enderror" name="keterangan" id="inputType9" cols="12" rows="5">{{ old('keterangan',$kandangdetails->keterangan) }}</textarea>
 	            </div>
 	          </div>
 	          <div class="form-group">

@@ -19,21 +19,30 @@
 
 	            <div class="form-group">       
 	          	<label>kandang</label>
-	                <select class="custom-select select-suplier" name="kandang_detail_id">
+	                <select class="custom-select select-suplier @error('kandang_detail_id') is-invalid @enderror" name="kandang_detail_id">
 	                  @foreach ($kandangdetails as $kandang)
 	                  	<option value="{{ $kandang->id }}">{{ $kandang->Kandang->nama }}</option>
 	                  @endforeach
 	                </select>
+	                @error('kandang_detail_id')
+	                	<div class="invalid-feedback">{{ $message }}</div>
+	                @enderror
 	            </div>
 
 	          <div class="form-group">
 	            <label for="inputPassword1">Ayam Mati</label>
-	            <input type="number" name="ayam_mati" class="form-control" id="inputPassword1" placeholder="Enter phone number">
+	            <input type="number" name="ayam_mati" class="form-control @error('ayam_mati') is-invalid @enderror" id="inputPassword1" placeholder="Jumlah Ayam Mati">
+	            @error('ayam_mati')
+	            	<div class="invalid-feedback">{{ $message }}</div>
+	            @enderror
 	          </div>
 
 	          <div class="form-group">
 	            <label for="inputPassword1">Ayam Sakit</label>
-	            <input type="number" name="ayam_sakit" class="form-control" id="inputPassword1" placeholder="Enter phone number">
+	            <input type="number" name="ayam_sakit" class="form-control @error('ayam_sakit') is-invalid @enderror" id="inputPassword1" placeholder="Jumlah Ayam Sakit">
+	            @error('ayam_sakit')
+	            	<div class="invalid-feedback">{{ $message }}</div>
+	            @enderror
 	          </div>
 
 	          <button type="submit" class="btn btn-sm btn-primary">Buat</button>

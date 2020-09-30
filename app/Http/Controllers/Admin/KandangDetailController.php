@@ -19,12 +19,14 @@ class KandangDetailController extends Controller
 	}
     public function index()
     {
+        $this->authorize('viewAny',$this->model);
     	$kandangdetails=$this->model->orderBy('created_at','desc')->get();
     	return view('admin.kandang_detail.index',compact('kandangdetails'));
     }
 
     public function create()
     {
+        $this->authorize('create',$this->model);
     	$supliers=Suplier::all();
     	$kategoris=Kategori::all();
     	$kandangs=Kandang::where('status','kosong')->get();
@@ -33,6 +35,14 @@ class KandangDetailController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('create',$this->model);
+        $request->validate([
+            'suplier_id'=>'required',
+            'kategori_id'=>'required',
+            'kandang_id'=>'required',
+            'jumlah_awal'=>'required',
+            'keterangan'=>'required',
+        ]);
         // dd($request['kandang_id']);
         Kandang::where('id',$request['kandang_id'])->update(['status'=>'terpakai']);
     	$request->merge(['status'=>'diternak']);
@@ -44,6 +54,7 @@ class KandangDetailController extends Controller
 
     public function edit(Request $request,$id)
     {
+        $this->authorize('update',$this->model);
     	$supliers=Suplier::all();
     	$kategoris=Kategori::all();
     	$kandangs=Kandang::where('status','kosong')->get();
@@ -54,6 +65,15 @@ class KandangDetailController extends Controller
 
     public function update(Request $request,$id)
     {
+        $this->authorize('update',$this->model);
+        $request->validate([
+            'suplier_id'=>'required',
+            'kategori_id'=>'required',
+            'kandang_id'=>'required',
+            'jumlah_awal'=>'required',
+            'keterangan'=>'required',
+        ]);
+        
         $data=$this->model->find($id);
         $kategori=Kategori::find($data->kategori_id);
 
@@ -78,6 +98,7 @@ class KandangDetailController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize('delete',$this->model);
         $data=$this->model->find($id);
         $kandang=Kandang::where('id',$data['kandang_id'])->update(['status'=>'kosong']);
         $data->delete();
@@ -87,6 +108,7 @@ class KandangDetailController extends Controller
 
     public function panen($id)
     {
+        $this->authorize('update',$this->model);
         $data=$this->model->find($id);
         $data->update(['status'=>'terpanen']);
         $kategori=Kategori::find($data->kategori_id);

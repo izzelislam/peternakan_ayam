@@ -3,14 +3,14 @@ $current_path='/'.request()->path();
   $dashboard=[
     'url'=>'/admin',
     'title'=>'Dashboard',
-    'model'=>'',
+    'model'=>'Dashboard',
     'icon'=>'mdi mdi-gauge link-icon'
   ];
 
   $suplier=[
     'url'=>'#',
     'title'=>'Suplier',
-    'model'=>'',
+    'model'=>App\Model\Suplier::class,
     'icon'=>'mdi mdi-truck link-icon',
     'child'=>[
       [
@@ -27,7 +27,7 @@ $current_path='/'.request()->path();
   $pelanggan=[
     'url'=>'#',
     'title'=>'Pelanggan',
-    'model'=>'',
+    'model'=>App\Model\Pelanggan::class,
     'icon'=>'mdi mdi-clipboard-account link-icon',
     'child'=>[
       [
@@ -44,7 +44,7 @@ $current_path='/'.request()->path();
   $kategori=[
     'url'=>'/admin/kategori',
     'title'=>'Spesies Ayam',
-    'model'=>'',
+    'model'=>App\Model\Kategori::class,
     'icon'=>'mdi mdi-leaf link-icon',
     'child'=>[
       [
@@ -61,7 +61,7 @@ $current_path='/'.request()->path();
   $kandang=[
     'url'=>'#',
     'title'=>'Kandang',
-    'model'=>'',
+    'model'=>App\Model\Kandang::class,
     'icon'=>'mdi mdi-basket link-icon',
     'child'=>[
       [
@@ -78,14 +78,14 @@ $current_path='/'.request()->path();
   $user=[
     'url'=>'/admin/user/',
     'title'=>'User',
-    'model'=>'',
+    'model'=>App\Model\User::class,
     'icon'=>'mdi mdi-account link-icon'
   ];
 
   $order=[
     'url'=>'#',
     'title'=>'Order',
-    'model'=>'',
+    'model'=>App\Model\Order::class,
     'icon'=>'mdi mdi-cart-outline link-icon',
     'child'=>[
       [
@@ -102,7 +102,7 @@ $current_path='/'.request()->path();
    $cekayam=[
     'url'=>'#',
     'title'=>'Cek Ayam',
-    'model'=>'',
+    'model'=>App\Model\AyamCek::class,
     'icon'=>'mdi mdi-cloud-check link-icon',
     'child'=>[
       [
@@ -119,7 +119,7 @@ $current_path='/'.request()->path();
    $data_ayam=[
     'url'=>'#',
     'title'=>'Data Ayam',
-    'model'=>'',
+    'model'=>App\Model\KandangDetail::class,
     'icon'=>'mdi mdi mdi-owl link-icon',
     'child'=>[
       [
@@ -143,48 +143,49 @@ $current_path='/'.request()->path();
           </div>
           <div class="info-wrapper">
             <p class="user-name">{{ auth()->user()->name }}</p>
+            <small class="text-muted">{{ auth()->user()->role }}</small>
           </div>
         </div>
         {{-- area menu --}}
         <ul class="navigation-menu">
           <li class="nav-category-divider">MAIN</li>
           @foreach ($menus as $index=>$menu)
-            
-            @if (isset($menu['child']))
-            @php
-              $IsActive=false;
+            @can('viewAny',$menu['model'])
+                @if (isset($menu['child']))
+                @php
+                  $IsActive=false;
 
-              foreach ($menu['child'] as $child) {
-                if ($child['url'] == $current_path) {
-                  $IsActive=true;
-                }
+                  foreach ($menu['child'] as $child) {
+                    if ($child['url'] == $current_path) {
+                      $IsActive=true;
+                    }
+                    
+                  }
+                @endphp
+                  <li class="{{ $IsActive ? 'active' :'null' }}">
+                    <a href="#" data-toggle="collapse" aria-expanded="false" data-target="#menu{{ $index }}">
+                      <span class="link-title">{{ $menu['title'] }}</span>
+                      <i class="{{ $menu['icon'] }}"></i>
+                    </a>
+                    <ul class="collapse navigation-submenu" id="menu{{ $index }}">
+                      @foreach ($menu['child'] as $child)
                 
-              }
-            @endphp
-
-              <li class="{{ $IsActive ? 'active' :'null' }}">
-                <a href="#" data-toggle="collapse" aria-expanded="false" data-target="#menu{{ $index }}">
-                  <span class="link-title">{{ $menu['title'] }}</span>
-                  <i class="{{ $menu['icon'] }}"></i>
-                </a>
-                <ul class="collapse navigation-submenu" id="menu{{ $index }}">
-                  @foreach ($menu['child'] as $child)
-    
-                      <li class="{{ $child['url'] == $current_path ? 'active' :'null' }}">
-                        <a href="{{ $child['url'] }}">{{ $child['title'] }}</a>
-                      </li>
- 
-                  @endforeach
-                </ul>
-              </li>
-            @else
-              <li class="{{ $menu['url'] == $current_path ? 'active' :'null' }}">
-                <a href="{{ $menu['url'] }}">
-                  <span class="link-title">{{ $menu['title'] }}</span>
-                  <i class="{{ $menu['icon'] }}"></i>
-                </a>
-              </li>
-            @endif
+                          <li class="{{ $child['url'] == $current_path ? 'active' :'null' }}">
+                            <a href="{{ $child['url'] }}">{{ $child['title'] }}</a>
+                          </li>
+                
+                      @endforeach
+                    </ul>
+                  </li>
+                @else
+                  <li class="{{ $menu['url'] == $current_path ? 'active' :'null' }}">
+                    <a href="{{ $menu['url'] }}">
+                      <span class="link-title">{{ $menu['title'] }}</span>
+                      <i class="{{ $menu['icon'] }}"></i>
+                    </a>
+                  </li>
+                @endif
+            @endcan
           @endforeach
         </ul>
       </div>

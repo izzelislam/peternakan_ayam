@@ -18,12 +18,19 @@
 
 	          <div class="form-group">
 	            <label for="inputPassword1">Ayam Mati</label>
-	            <input type="number" name="ayam_mati" class="form-control" id="inputPassword1" placeholder="jumlah Ayam Mati"  value="{{ old('ayam_mati',$ayamcek->ayam_mati) }}">
+	            <input type="number" name="ayam_mati" class="form-control @error('ayam_mati') is-invalid @enderror" id="inputPassword1" placeholder="jumlah Ayam Mati"  value="{{ old('ayam_mati',$ayamcek->ayam_mati) }}">
+
+	            @error('ayam_mati')
+	            	<div class="invalid-feedback">{{ $message }}</div>
+	            @enderror
 	          </div>
 
 	          <div class="form-group">
 	            <label for="inputPassword1">Ayam Sakit</label>
-	            <input type="number" name="ayam_sakit" class="form-control" id="inputPassword1" placeholder="Jumlah Ayam Sakit" value="{{ old('ayam_sakit',$ayamcek->ayam_sakit) }}">
+	            <input type="number" name="ayam_sakit" class="form-control @error('ayam_sakit') is-invalid @enderror" id="inputPassword1" placeholder="Jumlah Ayam Sakit" value="{{ old('ayam_sakit',$ayamcek->ayam_sakit) }}">
+	            @error('ayam_sakit')
+	            	<div class="invalid-feedback">{{ $message }}</div>
+	            @enderror
 	          </div>
 
 	          <button type="submit" class="btn btn-sm btn-primary">Edit</button> <a class="btn btn-sm btn-success ml-2" href="{{ route('ayam_cek.index') }}">Kembali</a>

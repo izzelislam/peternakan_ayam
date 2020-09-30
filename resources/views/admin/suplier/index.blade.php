@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
-@section('title','Kategori')
-@section('page','Kategori')
+@section('title','Suplier')
+@section('page','Suplier')
 @section('content')
 @section('head-script')
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">

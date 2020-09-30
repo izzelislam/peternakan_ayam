@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Model\Kategori;
 use App\Model\Pelanggan;
 use App\Model\Order;
+use App\Model\OrderDetail;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -18,6 +19,7 @@ class OrderController extends Controller
     
     public function index()
     {
+        $this->authorize('viewAny',$this->model);
         $order=$this->model->orderBy('created_at','desc')->get();
         return view('admin.order.index',compact('order'));
     }
@@ -25,6 +27,8 @@ class OrderController extends Controller
  
     public function create()
     {
+        $this->authorize('create',$this->model);
+        $this->authorize('create',$this->model);
         $kategori=Kategori::where('stok','>',0)->get();
         $pelanggan=Pelanggan::all();
         return view('admin.order.form',compact('kategori','pelanggan'));
@@ -33,6 +37,18 @@ class OrderController extends Controller
     
     public function store(Request $request)
     {
+        $this->authorize('create',$this->model);
+        $this->authorize('create',$this->model);
+        $request->validate([
+            'pelanggan_id'=>'required',
+            'kategori_id.*'=>'required',
+            'harga.*'=>'required',
+            'qty.*'=>'required',
+            'subtotal.*'=>'required',
+            'total'=>'required',
+
+        ]);
+
         $stok=Kategori::all();
         if ($stok->sum('stok') < array_sum($request->qty)) {
             return redirect()->back()->with('stok','stok yang tersedia tidak cukup');
@@ -68,6 +84,7 @@ class OrderController extends Controller
    
     public function show($id)
     {
+        $this->authorize('view',$this->model);
         $order=$this->model->find($id);
         return view('admin.order.detail',compact('order'));
     }
@@ -75,6 +92,7 @@ class OrderController extends Controller
  
     public function edit($id)
     {
+        $this->authorize('update',$this->model);
         $order=Order::find($id);
         $pelanggan=Pelanggan::all();
         $kategori=Kategori::where('stok','>',0)->get();
@@ -84,12 +102,27 @@ class OrderController extends Controller
    
     public function update(Request $request, $id)
     {
+        $this->authorize('update',$this->model);
+        $request->validate([
+            'pelanggan_id'=>'required',
+            'kategori_id.*'=>'required',
+            'qty.*'=>'required',
+            'total'=>'required',
+
+        ]);
+
         $stok=Kategori::all();
 
         if ($stok->sum('stok') < array_sum($request->qty)) {
             return redirect()->back()->with('stok','stok yang tersedia tidak cukup');
         }else{
             $order=Order::findOrFail($id);
+            foreach ($order->OrderDetail as $index => $ord) {
+                $ktg=Kategori::find($ord->kategori_id);
+                $stok=$ktg->stok+$ord->qty;
+                $ktg->update(['stok'=>$stok]);
+            }
+
             $order->OrderDetail()->delete();
 
             $order->update([
@@ -98,10 +131,6 @@ class OrderController extends Controller
             ]);
 
             for ($i=0; $i < count($request->kategori_id) ; $i++) { 
-                for ($i=0; $i < count($order->OrderDetail) ; $i++) { 
-                    # code...
-                }
-
                 $order->OrderDetail()->create([
                     'kategori_id'=>$request->kategori_id[$i],
                     'harga'=>$request->harga[$i],
@@ -121,6 +150,7 @@ class OrderController extends Controller
    
     public function destroy($id)
     {
+        $this->authorize('delete',$this->model);
         $order=$this->model->find($id);
         $order->OrderDetail()->delete();
         $order->delete();

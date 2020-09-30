@@ -34,12 +34,15 @@
 	          <div class="row mb-4">
 	          	<div class="col-md-3">
 	          	  <label>Nama Pelanggan</label>
-	              <select class="custom-select pelanggan" name="pelanggan_id" x-model="pelanggan_id">
-	               	<option>-- pilih pelanggan --</option>
+	              <select name="pelanggan_id" class="custom-select pelanggan @error('pelanggan_id') is-invalid @enderror"  x-model="pelanggan_id">
+	               	<option value="{{ null }}">-- pilih pelanggan --</option>
 	               	@foreach ($pelanggan as $plg)
 	               		<option value="{{ old('pelanggan_id',$plg->id ) }}">{{ $plg->nama }}</option>
 	               	@endforeach
 	              </select>
+	              @error('pelanggan_id')
+	                  <div class="invalid-feedback">{{ $message }}</div>
+	              @enderror
 	          	</div>
 	          </div>
 
@@ -47,12 +50,15 @@
 	          	<div class="row">
 	          		<div class="col-md-3">
 	          		 <label>Kategori</label>
-	          	    <select class="custom-select select-suplier" name="kategori_id[]" x-model="row.kategori_id" x-on:change="setPrice(row.kategori_id,index)">
-	          	    	<option>--pilih kategori--</option>
+	          	    <select name="kategori_id[]" class="custom-select select-suplier @error('kategori_id.*') is-invalid @enderror"  x-model="row.kategori_id" x-on:change="setPrice(row.kategori_id,index)" >
+	          	    	<option value="{{ null }}">--pilih kategori--</option>
 	          	     	@foreach ($kategori as $ctg)
 	          	     		<option value="{{ $ctg->id }}">{{ $ctg->nama }}</option>
 	          	     	@endforeach
 	          	    </select>
+	          	    @error('kategori_id.*')
+	          	    	<div class="invalid-feedback">{{ $message }}</div>
+	          	    @enderror
 	          		</div>
 
 	          		<div class="col-md-3">
@@ -62,7 +68,11 @@
 
 	          		<div class="col-md-3">
 	          		  <label>Jumlah</label>
-	          	     <input type="number" name="qty[]" class="form-control" id="inputPassword1" placeholder="Masukkan Jumlah" x-on:change="setSub(index)" x-model='row.qty'>
+	          	     <input type="number" name="qty[]" class="form-control @error('qty.*') is-invalid @enderror" id="inputPassword1" placeholder="Masukkan Jumlah" x-on:change="setSub(index)" x-model='row.qty'>
+
+	          	     @error('qty.*')
+	          	     	<div class="invalid-feedback">{{ $message }}</div>
+	          	     @enderror
 	          		</div>
 
 	          		<div class="col-md-3">

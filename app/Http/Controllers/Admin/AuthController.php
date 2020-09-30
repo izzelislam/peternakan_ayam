@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\User;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AuthController extends Controller
 {
@@ -31,6 +32,34 @@ class AuthController extends Controller
     	}else{
     		return redirect()->back();
     	}
+    }
+
+    public function register()
+    {
+        return view('admin.auth.register');
+    }
+
+    public function register_proses(Request $request)
+    {
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required',
+            'no_hp'=>'required',
+            'password'=>'required',
+            'alamat'=>'required',
+            'role'=>'required',
+        ]);
+
+        $this->model->create([
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'no_hp'=>$request->no_hp,
+            'password'=>bcrypt($request->password),
+            'alamat'=>$request->alamat,
+            'role'=>$request->role,
+        ]);
+
+        return redirect()->back()->with('berhasil','berhasil membuat akun silahkan login');
     }
 
     public function logout()

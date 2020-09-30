@@ -15,6 +15,7 @@ class SuplierController extends Controller
 	}
     public function index()
     {
+        $this->authorize('viewAny',$this->model);
     	$supliers=Suplier::orderBy('id','desc')->get();
     	return view('admin.suplier.index',compact('supliers'));
     }
@@ -26,6 +27,12 @@ class SuplierController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'nama'=>'required',
+            'no_hp'=>'required',
+            'alamat'=>'required',
+        ]);
+
     	$this->model->create($request->all());
         Alert::success('Suplier', 'Berhasil Tambah Suplier !');
     	return redirect()->route('suplier.index');
@@ -45,6 +52,12 @@ class SuplierController extends Controller
 
 	public function update(Request $request,$id)
 	{
+        $request->validate([
+            'nama'=>'required',
+            'no_hp'=>'required',
+            'alamat'=>'required',
+        ]);
+        
 	   $this->model->find($id)->update($request->all());
        Alert::success('Suplier', 'Berhasil Edit Suplier !');
 		return redirect()->route('suplier.index');
@@ -52,8 +65,9 @@ class SuplierController extends Controller
 
     public function destroy($id)
     {
-    	$data=$this->model->find($id)->delete();
-        Alert::Warning('Suplier', 'Berhasil Hapus Suplier !');
+    	$data=$this->model->find($id);
+        Alert::Warning('Suplier', $data->nama.'Di Hapus!');
+        $data->delete();
     	return redirect()->route('suplier.index');
     }
 }

@@ -31,4 +31,6 @@ Route::namespace('Admin')->group(function(){
 	Route::get('/','AuthController@index')->name('login');
 	Route::post('/login','AuthController@loginProses')->name('login-proses');
 	Route::post('/logout','AuthController@logout')->name('logout');
+	Route::get('/register','AuthController@register')->name('register');
+	Route::post('/register','AuthController@register_proses')->name('register_proses');
 });

@@ -16,6 +16,7 @@ class PelangganController extends Controller
 
     public function index()
     {
+        $this->authorize('viewAny',$this->model);
     	$pelanggans=$this->model->orderBy('id','desc')->get();
     	return view('admin.pelanggan.index',compact('pelanggans'));
     }
@@ -52,6 +53,12 @@ class PelangganController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'nama'=>'required',
+            'no_hp'=>'required',
+            'alamat'=>'required',
+        ]);
+
     	$this->model->find($id)->update($request->all());
         Alert::success('Pelanggan', 'Berhasil Edit Pelanggan !');
     	return redirect()->route('pelanggan.index');
